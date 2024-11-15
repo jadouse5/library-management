@@ -1,0 +1,48 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Book {
+  id          String    @id @default(cuid())
+  title       String
+  author      String
+  isbn        String    @unique
+  publishYear Int
+  isBorrowed  Boolean   @default(false)
+  borrowings  Borrowing[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model DVD {
+  id          String    @id @default(cuid())
+  title       String
+  director    String
+  duration    Int
+  releaseYear Int
+  isBorrowed  Boolean   @default(false)
+  borrowings  Borrowing[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Borrowing {
+  id          String    @id @default(cuid())
+  bookId      String?
+  dvdId       String?
+  borrower    String
+  borrowDate  DateTime  @default(now())
+  returnDate  DateTime?
+  book        Book?     @relation(fields: [bookId], references: [id])
+  dvd         DVD?      @relation(fields: [dvdId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([bookId])
+  @@index([dvdId])
+}
