@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '../../../lib/prisma'
 
 export async function GET() {
   try {
-    const dvds = await prisma.dvd.findMany({
+    const dvds = await prisma.dVD.findMany({
       orderBy: { createdAt: 'desc' }
     })
     return NextResponse.json(dvds)
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const json = await request.json()
-    const dvd = await prisma.dvd.create({
+    const dvd = await prisma.dVD.create({
       data: json,
     })
     return NextResponse.json(dvd)

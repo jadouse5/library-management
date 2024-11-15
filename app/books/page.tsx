@@ -144,7 +144,7 @@ export default function BooksPage() {
         />
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-lg border border-border bg-card shadow-lg hover:shadow-xl transition-shadow duration-200">
         <Table>
           <TableHeader>
             <TableRow>
